@@ -1,0 +1,46 @@
+spring:
+  application:
+      name: authority-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+  redis:
+      timeout: 5000
+      commandTimeout: 5000
+      jedis:
+         pool:
+           max-active: 8
+           min-idle: 0
+           max-idle: 8
+           max-wait: 1000
+      cluster:
+            nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005,127.0.0.1:7006
+  zipkin:
+    base-url: http://localhost:8006
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+server:
+  port: 8007
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 5000
